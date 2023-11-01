@@ -363,5 +363,31 @@ function closePopup() {
     document.getElementById("moviePopupWindow").style.display = "none";
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    const sidebar = document.querySelector('.sidebar-icon');
+    const sidebarMenu = document.querySelector('.sidebar-menu');
+    const menuIcon = document.querySelector('.menu-icon');
+
+    menuIcon.addEventListener('click', function() {
+        sidebar.classList.toggle('open');
+        sidebarMenu.classList.toggle('open');
+
+        if (sidebar.classList.contains('open')) {
+            sidebarMenu.style.display = 'flex';
+        } else {
+            // Add a transitionend event listener to detect when the transition ends
+            sidebarMenu.addEventListener('transitionend', function() {
+                // Check if the sidebar is closed completely before setting display to 'none'
+                if (!sidebar.classList.contains('open')) {
+                    sidebarMenu.classList.toggle('closed');
+                }
+            });
+
+            sidebarMenu.classList.toggle('closed');
+        }
+    });
+});
+
+
 
 AIzaSyCnttqyzHWlRJONCxWYlZ7XfE8N-Tg6puM

@@ -9,6 +9,7 @@ body {
     font-family: "Poppins", sans-serif;
     margin: 0;
     position: relative;
+    overflow-x: hidden; /* Prevent horizontal scrollbar when the sidebar is open */
 }
 
 p {
@@ -21,13 +22,62 @@ header {
     justify-content: flex-start; /* Align items to the left */
     align-items: center; /* Center items vertically */
     padding: 1rem;
+    z-index: 199;
+
 }
 
-.logo img {
-    width: 35px; /* Set the width of the logo */
-    margin-top: 5px;
-    margin-right: 40px; /* Add some spacing between the logo and search bar */
-    margin-left: 25px; /* Add some spacing between the logo and search bar */
+.menu-icon {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    margin-right: 20px;
+    z-index: 200;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 5px 0;
+    transition: 0.4s;
+}
+
+.sidebar-icon.open .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.sidebar-icon.open .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.sidebar-icon.open .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+.sidebar-menu {
+    height: 100%;
+    width: 200px;
+    background-color: #252525;
+    position: fixed;
+    left: -200px; /* Move the sidebar outside the viewport on the left */
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    z-index: 100;
+    transition: left 1s ease; /* Slow down the sliding effect (0.5 seconds duration) */
+    margin-right: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Add a box shadow with a 10px blur and 0.5 opacity */
+}
+
+.sidebar-menu.open {
+    left: 0; /* Move the sidebar to the left when the open class is present */
+}
+
+.sidebar-menu.closed {
+    left: -200; /* Move the sidebar to the left when the open class is present */
 }
 
 .search {
@@ -38,6 +88,8 @@ header {
     font-size: 1rem;
     padding: 0.5rem 1rem;
     border: none;
+    padding-right: 10px;
+    z-index: 9999;
 }
 
 .search::placeholder {
