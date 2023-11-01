@@ -1,0 +1,399 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap");
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #252525;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    position: relative;
+}
+
+p {
+    font-size: 12px;
+}
+
+header {
+    background-color: #161616;
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    align-items: center; /* Center items vertically */
+    padding: 1rem;
+}
+
+.logo img {
+    width: 35px; /* Set the width of the logo */
+    margin-top: 5px;
+    margin-right: 40px; /* Add some spacing between the logo and search bar */
+    margin-left: 25px; /* Add some spacing between the logo and search bar */
+}
+
+.search {
+    background-color: #252525;
+    border-radius: 50px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+}
+
+.search::placeholder {
+    color: rgb(126, 126, 126);
+}
+
+.search:focus {
+    background-color: rgb(80, 80, 80);
+    outline: none;
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+    .search {
+        width: 400px; /* Set the desired width for larger screens */
+    }
+}
+
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.movie {
+    background-color: rgb(26, 26, 26);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+    margin: 1rem; /* Add margin to create gaps between movies */
+    width: 200px; /* Set the desired width for movie containers */
+    height: 300px; /* Set the desired height for movie containers */
+    border-radius: 20px;
+    margin-top: 100px;
+}
+
+.movie:hover {
+    filter: brightness(1.35);
+}
+
+.movie .movie-info,
+.movie .overview {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #161616;
+    text-align: center;
+}
+
+.movie-row {
+    width: 100%;
+    height: 100%; /* Adjust the height as needed */
+    overflow-x: auto;
+    background-color: #252525; /* Set the background color of the container */
+    text-align: left;
+}
+
+.movie-rating {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.rating {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: bold;
+}
+
+
+.movie-container {
+    display: inline-flex; /* Use inline-flex for horizontal arrangement */
+    flex-wrap: nowrap; /* Prevent movies from wrapping to the next line */
+}
+
+
+@media (max-width: 768px) {
+    .movie {
+        width: 225px;
+    }
+    .overview {
+        display: none;
+    }
+    
+}
+
+.movie-row h2 {
+    position: absolute;
+    font-size: 25px; /* Set the desired font size */
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #252525; /* Background color for the title */
+    padding: 10px 20px; /* Adjust padding as needed */
+    z-index: 1; /* Set a high z-index value to ensure it's above other elements */
+    width: 100%;
+}
+
+
+.movie img {
+    width: 100%;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3)
+}
+
+.movie-info {
+    color: #eee;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: space-around; /* Distribute space evenly between items */
+    padding: 1rem; /* Adjust padding as needed */
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.movie-info h3 {
+    margin: 0; /* Remove default margin for h3 element */
+}
+
+
+.movie-info span {
+    background-color: #2b2b2b;
+    border-radius: 10px;
+    font-weight: bold;
+    padding: 0.25rem 0.5rem;
+    margin: 5px;
+}
+
+.overview {
+    background-color: rgb(255, 255, 255, 0.9);
+    padding: 2rem;
+    position: absolute;
+    max-height: 100%;
+    overflow: auto;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transform: translateY(101%);
+    transition: transform 0.3s ease-in;
+    font-size: 12px;
+}
+
+.overview h3 {
+    margin-top: 0;
+}
+
+
+.movie:hover .overview {
+    transform: translateY(0);
+}
+
+/* Add this CSS to style the scrollbar */
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(65, 65, 68, 0.7);
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-track {
+    background-color: #252525;
+}
+/* Custom scrollbar styles for the overview section */
+.overview::-webkit-scrollbar {
+    width: 6px;
+}
+
+.overview::-webkit-scrollbar-thumb {
+    background-color: rgb(65, 65, 68, 0.7);
+    border-radius: 3px;
+}
+
+.overview::-webkit-scrollbar-track {
+    background-color: #252525;
+}
+
+/* Add this CSS to style the scrollbar for movie rows and containers */
+.movie-row::-webkit-scrollbar {
+    width: 10px;
+}
+
+.movie-row::-webkit-scrollbar-thumb {
+    background-color: rgb(65, 65, 68, 0.7);
+    border-radius: 5px;
+}
+
+.movie-row::-webkit-scrollbar-track {
+    background-color: #252525;
+}
+
+.movie-container::-webkit-scrollbar {
+    width: 120px;
+}
+
+.movie-container::-webkit-scrollbar-thumb {
+    background-color: rgb(65, 65, 68, 0.7);
+    border-radius: 5px;
+}
+
+.movie-container::-webkit-scrollbar-track {
+    background-color: #252525;
+}
+
+
+/* Additional styles for overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 998; /* Lower z-index than the popup container to make sure it's below the popup */
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+
+.popup-content {
+    background-color: rgb(255, 255, 255, 0.2);
+    color: #ffffff;
+    border-radius: 3px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+.movie-info-popup-container {
+    display: right;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #fff;
+    color: #333;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.close:hover {
+    background-color: #3f3f3f;
+    color: #fff;
+}
+
+/* Add this CSS to position movie details above the trailer */
+.movie-info-popup-container {
+    margin-bottom: 10px; /* Add some spacing between movie details and trailer */
+    background-color: rgb(22, 22, 22, 0.5);
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+/* Update the CSS for the trailer to center it within the popup */
+.trailer {
+    width: 80%; /* Set the width to 100% to fill the container */
+    height: 100%; /* Set the height to 100% to fill the container */
+
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+
+@media (max-width: 766px) {
+    .trailer {
+        width: 100%; /* Set width for screens with width 768px and above */
+        height: 100%; /* Set height for screens with width 768px and above */
+    }
+}
+
+@media (min-width: 768px) {
+    .trailer {
+        width: 500px; /* Set width for screens with width 768px and above */
+        height: 100%; /* Set height for screens with width 768px and above */
+    }
+}
+
+.movie-banner-container {
+    width: 100%;
+    height: 400px;
+    box-sizing: border-box;
+    background-color: #252525;
+}
+
+.film-of-the-day-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #2e2e2e;
+    color: #ffffff;
+    z-index: 2;
+    border-radius: 0px;
+    text-align: center;
+    overflow: hidden;
+    padding-right: 20px;
+}
+
+.film-of-the-day {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.film-of-the-day img {
+    width: 70%; /* Set the desired width for the image */
+    height: auto;
+    object-fit: cover; /* Maintain aspect ratio while covering the area */
+    border-radius: 10px; /* Add border radius for rounded corners */
+}
+
+.film-info {
+    text-align: left;
+    margin-left: 20px;
+    width: calc(100% - 220px); /* Calculate width to accommodate image and margin */
+}
+
+@media (max-width: 766px) {
+    .film-of-the-day img {
+        width: 120%;
+    }
+}
+
+
