@@ -45,6 +45,7 @@ async function getMovies() {
         newReleases = [...newReleases, ...newMovies];
         page++;
     }
+    
 
         // Find a random movie rated over 8
         const eligibleMovies = popularMovies.concat(topRatedMovies).filter(movie => movie.vote_average > 7);
@@ -54,23 +55,22 @@ async function getMovies() {
             const filmOfTheDay = eligibleMovies[randomIndex];
     
             const filmOfTheDayContainer = document.getElementById("film-of-the-day");
-            const { poster_path, title, overview, release_date } = filmOfTheDay;
+            const { backdrop_path, title, overview, release_date } = filmOfTheDay;
+            
+            const backdropPath = backdrop_path ? `${IMGPATH}${backdrop_path}` : ''; // Construct the backdrop image URL
+            
             const releaseYear = release_date ? new Date(release_date).getFullYear() : 'N/A';
-    
-            // Create HTML content for film of the day
+            
+            // Inside your JavaScript code where you set filmOfTheDayHTML
             const filmOfTheDayHTML = `
-                <div class="film-of-the-day">
-                    <img src="${IMGPATH + poster_path}" alt="${title}" />
-                    <div class="film-info">
-                        <h1> Film Of The Day </h1>
-                        <h3>${title}</h3>
-                        <p>${overview}</p>
-                        <p><strong>${releaseYear}</strong></p>
-                    </div>
+                <div class="movie-banner-container">
+                    <img src="${backdropPath}" alt="${title}" class="backdrop-image" />
                 </div>
             `;
-    
+
             filmOfTheDayContainer.innerHTML = filmOfTheDayHTML;
+
+            
         } else {
             // Handle the case when no eligible movies are found
             const filmOfTheDayContainer = document.getElementById("film-of-the-day");
@@ -269,95 +269,115 @@ async function fetchMovieDetails(movieTitle) {
     }
 }
 
+// Named function for the Watch Trailer button click event
+function handleWatchTrailerClick(searchQuery) {
+    window.open(`https://www.youtube.com/results?search_query=sc${searchQuery}`);
+}
 
-
-// Declare a variable to hold the YouTube iframe element
-let youtubeIframe = null;
+// Named function for the Add to Favorites button click event
+function handleAddToFavouritesClick() {
+    // Toggle logic and button image change here
+}
 
 // Function to open the popup window with movie details and trailer
 async function openPopup(movieTitle) {
-    
     const popup = document.getElementById("moviePopupWindow");
     const popupContent = popup.querySelector(".popup-content");
-    const trailerDiv = popupContent.querySelector("#trailer");
     const movieInfoDiv = popupContent.querySelector("#movie-info-popup"); // New div for movie information
     // Fetch movie details from your data source (e.g., API call) based on movieTitle
     // Replace the following line with your actual API call to fetch movie details
     const movieDetails = await fetchMovieDetails(movieTitle);
-
+    const watchTrailerButton = document.getElementById("watchTrailerButton");
+    const addToFavouritesButton = document.getElementById("addToFavouritesButton");
     const releaseYear = movieDetails.release_date ? new Date(movieDetails.release_date).getFullYear() : 'N/A';
 
+    // Construct YouTube search query for the official trailer
+    const searchQuery = `${movieDetails.title} official trailer`;
 
-    // Populate movie information in the movieInfoDiv
+    // Populate movie information in the movieInfoDiv with the backdrop image as background
+    movieInfoDiv.style.backgroundImage = `url('${IMGPATH + movieDetails.backdrop_path}')`;
+    movieInfoDiv.style.backgroundSize = 'cover'; // Adjust the background size property as needed
+    movieInfoDiv.style.height = '1000px'; // Adjust the background size property as needed
+    movieInfoDiv.style.backgroundPosition = 'center'; // Adjust the background position property as needed
+    movieInfoDiv.style.color = '#ffffff'; // Set text color for better visibility against the backdrop
+    movieInfoDiv.style.position = 'relative'; // Set the position to relative for positioning the pseudo-element
+
+    // Set display to flex and use flex-direction, justify-content, and align-items properties for centering
+    movieInfoDiv.style.display = 'flex';
+    movieInfoDiv.style.flexDirection = 'column';
+    movieInfoDiv.style.justifyContent = 'center';
+    movieInfoDiv.style.alignItems = 'center';
+
     movieInfoDiv.innerHTML = `
         <h1>${movieDetails.title}</h1>
-        <p>${movieDetails.overview}</p>
         <p><b>${releaseYear} &bull; ${movieDetails.runtime}m</b></p>
-        <!-- Add more movie details as needed -->
+        <p>${movieDetails.overview}</p>
     `;
 
-    // Fetch movie trailer using YouTube Data API
-    const apiKey = "AIzaSyCnttqyzHWlRJONCxWYlZ7XfE8N-Tg6puM";
-    const trailerUrl = `https://www.googleapis.com/youtube/v3/search?q=${encodeURIComponent(
-        movieTitle + " official trailer"
-    )}&key=${apiKey}&part=snippet&type=video`;
+    // Create a pseudo-element for the fading effect
+    const fadingOverlay = document.createElement('div');
+    fadingOverlay.classList.add('fading-overlay'); // Add a CSS class for styling
 
-    // Check if there is already an existing YouTube iframe, and remove it if present
-    if (youtubeIframe && youtubeIframe.parentNode) {
-        youtubeIframe.parentNode.removeChild(youtubeIframe);
+    // Append the fading overlay element to the movieInfoDiv
+    movieInfoDiv.appendChild(fadingOverlay);
+
+    // Create a pseudo-element for the vignette effect
+    const vignette = document.createElement('div');
+    vignette.classList.add('vignette'); // Add a CSS class for styling
+
+    // Append the vignette element to the movieInfoDiv
+    movieInfoDiv.appendChild(vignette);
+
+
+
+
+    // Remove previous event listeners (if any)
+    if (watchTrailerButton) {
+        watchTrailerButton.removeEventListener("click", handleWatchTrailerClick);
+    }
+    if (addToFavouritesButton) {
+        addToFavouritesButton.removeEventListener("click", handleAddToFavouritesClick);
     }
 
-    try {
-        const response = await fetch(trailerUrl);
-        const data = await response.json();
+    // Assign the buttons to the global variables
 
-        // Check if there are any video results
-        if (data.items && data.items.length > 0) {
-            const videoId = data.items[0].id.videoId;
-            // Create an iframe element for the YouTube video
-            // Create an iframe element for the YouTube video
-            const iframe = document.createElement("iframe");
-            iframe.src = `https://www.youtube.com/embed/${videoId}`;
-            iframe.allowFullscreen = true;
+    // Add event listeners using named functions
+    watchTrailerButton.addEventListener("click", () => {
+        handleWatchTrailerClick(searchQuery);
+    });
 
-            // Set width to 100% for all devices
-            iframe.width = "80%";
-
-            // Check if it's a desktop (width greater than or equal to 768px)
-            if (window.innerWidth >= 768) {
-                iframe.height = "400px"; // Set height to 400px for desktop
-                iframe.style.borderRadius = "20px";
-            } else {
-                // For mobile devices, set height to 100% and border radius to 10px
-                iframe.height = "100%";
-                iframe.style.borderRadius = "10px";
-            }
-
-
-            // Append the iframe to the movie info div
-            movieInfoDiv.appendChild(iframe);
-
-            // Assign the created iframe to the youtubeIframe variable
-            youtubeIframe = iframe;
-        } else {
-            // If no trailer is found, display a message
-            trailerDiv.innerText = "Trailer not available";
-        }
-    } catch (error) {
-        console.error("Error fetching trailer:", error);
-        // If an error occurs, display a message
-        trailerDiv.innerText = "Error fetching trailer";
-    }
+    addToFavouritesButton.addEventListener("click", () => {
+        handleAddToFavouritesClick();
+    });
 
     // Display the popup
     popup.style.display = "flex";
 }
+    
+        // Change the button image based on its state
+        const buttonImage = addToFavouritesButton.querySelector("img");
+        if (addToFavouritesButton.classList.contains("clicked")) {
+            // If the button is in the clicked state, change the image to remove-favourites.png
+            buttonImage.src = "./assets/icons/remove-favourites.png";
+    
+            // Add logic here for adding film to favorites
+            // addFilmToFavourites();
+        } else {
+            // If the button is not in the clicked state, revert the image to add-favourites.png
+            buttonImage.src = "./assets/icons/add-favourites.png";
+    
+            // Add logic here for removing film from favorites
+            // removeFilmFromFavourites();
+        }
+
 
 // Function to close the popup window
 function closePopup() {
-    // Check if there is an existing YouTube iframe, and remove it if present
-    if (youtubeIframe) {
-        youtubeIframe.parentNode.removeChild(youtubeIframe);
+    // Check if the buttons are defined before removing event listeners
+    if (watchTrailerButton && addToFavouritesButton) {
+        // Remove event listeners
+        watchTrailerButton.removeEventListener("click", handleWatchTrailerClick);
+        addToFavouritesButton.removeEventListener("click", handleAddToFavouritesClick);
     }
 
     document.getElementById("moviePopupWindow").style.display = "none";
@@ -387,7 +407,3 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-
-
-
-AIzaSyCnttqyzHWlRJONCxWYlZ7XfE8N-Tg6puM

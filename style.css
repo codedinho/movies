@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: #252525;
+    background-color: #000000;
     font-family: "Poppins", sans-serif;
     margin: 0;
     position: relative;
@@ -14,16 +14,23 @@ body {
 
 p {
     font-size: 12px;
+    z-index: 1;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+h1 {
+    font-size: 35px;
+    z-index: 1;
 }
 
 header {
-    background-color: #161616;
+    background-color: #000000;
     display: flex;
     justify-content: flex-start; /* Align items to the left */
     align-items: center; /* Center items vertically */
     padding: 1rem;
     z-index: 199;
-
 }
 
 .menu-icon {
@@ -57,7 +64,7 @@ header {
 .sidebar-menu {
     height: 100%;
     width: 200px;
-    background-color: #252525;
+    background-color: #161616;
     position: fixed;
     left: -200px; /* Move the sidebar outside the viewport on the left */
     top: 0;
@@ -88,7 +95,6 @@ header {
     font-size: 1rem;
     padding: 0.5rem 1rem;
     border: none;
-    padding-right: 10px;
     z-index: 9999;
 }
 
@@ -128,6 +134,8 @@ main {
     height: 300px; /* Set the desired height for movie containers */
     border-radius: 20px;
     margin-top: 100px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5)
+
 }
 
 .movie:hover {
@@ -150,8 +158,9 @@ main {
     width: 100%;
     height: 100%; /* Adjust the height as needed */
     overflow-x: auto;
-    background-color: #252525; /* Set the background color of the container */
+    background-color: #000000; /* Set the background color of the container */
     text-align: left;
+    
 }
 
 .movie-rating {
@@ -163,6 +172,8 @@ main {
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 1rem;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+    font-weight: 700;
 }
 
 .rating {
@@ -176,6 +187,7 @@ main {
 .movie-container {
     display: inline-flex; /* Use inline-flex for horizontal arrangement */
     flex-wrap: nowrap; /* Prevent movies from wrapping to the next line */
+    
 }
 
 
@@ -194,10 +206,11 @@ main {
     font-size: 25px; /* Set the desired font size */
     font-weight: 600;
     color: #ffffff;
-    background-color: #252525; /* Background color for the title */
+    background-color: #000000; /* Background color for the title */
     padding: 10px 20px; /* Adjust padding as needed */
     z-index: 1; /* Set a high z-index value to ensure it's above other elements */
     width: 100%;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
 }
 
 
@@ -218,7 +231,7 @@ main {
 }
 
 .movie-info h3 {
-    margin: 0; /* Remove default margin for h3 element */
+    margin: 0; /*  default margin for h3 element */
 }
 
 
@@ -256,42 +269,44 @@ main {
 /* Add this CSS to style the scrollbar */
 body::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
 }
 
 body::-webkit-scrollbar-thumb {
-    background-color: rgb(65, 65, 68, 0.7);
+    background-color: #0e0e0e;
     border-radius: 5px;
 }
 
 body::-webkit-scrollbar-track {
-    background-color: #252525;
+    background-color: #000000;
 }
 /* Custom scrollbar styles for the overview section */
 .overview::-webkit-scrollbar {
-    width: 6px;
+    width: 10px;
 }
 
 .overview::-webkit-scrollbar-thumb {
-    background-color: rgb(65, 65, 68, 0.7);
+    background-color: #0e0e0e;
     border-radius: 3px;
 }
 
 .overview::-webkit-scrollbar-track {
-    background-color: #252525;
+    background-color: #000000;
 }
 
 /* Add this CSS to style the scrollbar for movie rows and containers */
 .movie-row::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
 }
 
 .movie-row::-webkit-scrollbar-thumb {
-    background-color: rgb(65, 65, 68, 0.7);
-    border-radius: 5px;
+    background-color: #0e0e0e;
+    border-radius: 10px;
 }
 
 .movie-row::-webkit-scrollbar-track {
-    background-color: #252525;
+    background-color: #000000;
 }
 
 .movie-container::-webkit-scrollbar {
@@ -299,24 +314,12 @@ body::-webkit-scrollbar-track {
 }
 
 .movie-container::-webkit-scrollbar-thumb {
-    background-color: rgb(65, 65, 68, 0.7);
-    border-radius: 5px;
+    background-color: #0e0e0e;
+    border-radius: 10px;
 }
 
 .movie-container::-webkit-scrollbar-track {
-    background-color: #252525;
-}
-
-
-/* Additional styles for overlay */
-.popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 998; /* Lower z-index than the popup container to make sure it's below the popup */
+    background-color: #000000;
 }
 
 .popup {
@@ -325,28 +328,35 @@ body::-webkit-scrollbar-track {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    height: 100%; /* Set the popup height to cover the entire screen */
+    background-color: rgba(0, 0, 0, 1);
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 997;
 }
-
 
 .popup-content {
-    background-color: rgb(255, 255, 255, 0.2);
+    background-size: cover;
+    background-position: center;
     color: #ffffff;
-    border-radius: 3px;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    overflow-y: auto;
     text-align: center;
-    padding: 20px;
-    position: relative;
+    border-radius: 10px; /* Add border-radius for rounded corners */
+    width: 100%; /* Set the content width to cover the entire screen */
+    height: 100%; /* Set the content height to cover the entire screen */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Add this CSS to position movie details above the trailer */
 .movie-info-popup-container {
-    display: right;
+    border: none;
+    overflow: none;
+    width: 100%;
+    height: auto; /* Automatically adjust the height based on the width */
+    overflow: visible;
 }
 
 .close {
@@ -366,46 +376,66 @@ body::-webkit-scrollbar-track {
     color: #fff;
 }
 
-/* Add this CSS to position movie details above the trailer */
-.movie-info-popup-container {
-    margin-bottom: 10px; /* Add some spacing between movie details and trailer */
-    background-color: rgb(22, 22, 22, 0.5);
-    border-radius: 20px;
-    padding: 20px;
-    margin-top: 40px;
-}
-
-/* Update the CSS for the trailer to center it within the popup */
-.trailer {
-    width: 80%; /* Set the width to 100% to fill the container */
-    height: 100%; /* Set the height to 100% to fill the container */
-
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-
-@media (max-width: 766px) {
-    .trailer {
-        width: 100%; /* Set width for screens with width 768px and above */
-        height: 100%; /* Set height for screens with width 768px and above */
-    }
-}
-
-@media (min-width: 768px) {
-    .trailer {
-        width: 500px; /* Set width for screens with width 768px and above */
-        height: 100%; /* Set height for screens with width 768px and above */
-    }
-}
-
 .movie-banner-container {
+    position: relative;
     width: 100%;
-    height: 400px;
+    height: 100%; /* Set the height to cover the full viewport height */
     box-sizing: border-box;
-    background-color: #252525;
+    overflow: hidden; /* Ensure the content inside doesn't overflow */
 }
+
+.movie-banner-container::before,
+.movie-banner-container::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 50%; /* Adjust the height of the gradient overlay as needed */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
+    pointer-events: none; /* Ensure the overlay doesn't interfere with interactions */
+}
+
+.movie-banner-container::before {
+    top: 0;
+    transform: scaleY(-1); /* Flip the gradient upside down */
+}
+
+.movie-banner-container::after {
+    bottom: 0;
+}
+
+
+
+
+/* Media query for mobile devices with a maximum width of 767px */
+@media (min-width: 766px) {
+    .movie-banner-container{
+        height: 500px;
+    }
+}
+
+
+.film-of-the-day {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Add styles for the fading effect */
+.backdrop-container {
+    position: relative;
+    width: 100vw;
+    height: auto;
+    overflow: hidden;
+
+}
+
+.backdrop-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 
 .film-of-the-day-container {
     display: flex;
@@ -414,38 +444,108 @@ body::-webkit-scrollbar-track {
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    background-color: #2e2e2e;
     color: #ffffff;
     z-index: 2;
     border-radius: 0px;
     text-align: center;
     overflow: hidden;
-    padding-right: 20px;
-}
-
-.film-of-the-day {
-    display: flex;
-    align-items: center;
-    width: 100%;
+    object-fit: cover;
 }
 
 .film-of-the-day img {
-    width: 70%; /* Set the desired width for the image */
+    position: relative;
+    width: 65%; /* Set the desired width for the image */
+    height: 200px;
     height: auto;
     object-fit: cover; /* Maintain aspect ratio while covering the area */
     border-radius: 10px; /* Add border radius for rounded corners */
+    box-shadow: 10px 10px 25px 0px rgba(14, 14, 14, 0.75); /* Add a shadow effect */
 }
 
-.film-info {
-    text-align: left;
-    margin-left: 20px;
-    width: calc(100% - 220px); /* Calculate width to accommodate image and margin */
-}
 
 @media (max-width: 766px) {
     .film-of-the-day img {
-        width: 120%;
+        width: 100%;
+    }
+}
+
+/* Add CSS styles for the trailer button and movie info */
+.trailer-button {
+    text-align: center;
+    margin-top: 20px; /* Adjust the margin-top as needed to position the button */
+}
+
+#watchTrailerButton, #addToFavouritesButton {
+    background-color: rgb(22, 22, 22);    border: none;
+    color: #000; /* Button text color */
+    cursor: pointer;
+    color: #eee;
+    text-align: center;
+    font-weight: 750;
+    font-size: 16px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 15px;
+    margin: 10px;
+}
+
+#watchTrailerButton:hover, #addToFavouritesButton:hover {
+    background-color: #252525;
+    border-radius: 10px;
+}
+
+#watchTrailerButton IMG, #addToFavouritesButton IMG{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    color: #000; /* Button text color */
+    cursor: pointer;
+    width: 35px;
+    
+}
+
+/* Default styles for the movie poster */
+.movie-poster {
+    width: 210px; /* Set the default width of the poster for desktop */
+    height: auto; /* Automatically adjust the height based on the width */
+    border-radius: 10px; /* Apply border-radius for rounded corners */
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75); /* Add a shadow effect */
+}
+
+/* Media query for mobile devices with a maximum width of 767px */
+@media (max-width: 767px) {
+    .movie-poster {
+        width: 100%; /* Set the width to 100% for mobile devices */
+    }
+    .movie-row::-webkit-scrollbar {
+        display: none;
     }
 }
 
 
+/* Add styles for the fading effect */
+.fading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Ensure the fading overlay doesn't interfere with interactions */
+    /* Add linear gradients for top and bottom */
+    background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)) top,
+                linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)) bottom;
+    z-index: 0;
+}
+
+/* Add styles for the black boxes */
+.black-box {
+    background-color: #000; /* Black color for the boxes */
+    height: 100%; /* Adjust the height of the black boxes as needed */
+    width: 100%; /* Occupy full width of the parent element */
+}
+
+/* Add styles for the black boxes */
+.black-box-top {
+    background-color: #000; /* Black color for the boxes */
+    height: 60%; /* Adjust the height of the black boxes as needed */
+    width: 100%; /* Occupy full width of the parent element */
+}

@@ -28,15 +28,23 @@
         </header>       
         <main class="movie-banner-container" id="main-banner">
             <div class="film-of-the-day-container" id="film-of-the-day">
-            <div class="film-of-the-day-info" id="film-info"></div>
         </div>
         </main>        
         <main class="movie-row" id="main"></main>
         <div id="moviePopupWindow" class="popup">
             <div class="popup-content">
                 <h2></h2>
+                <div class="black-box-top"></div> <!-- Black box for the bottom -->
                 <div id="movie-info-popup" class="movie-info-popup-container"></div>
-                <div id="trailer" class="trailer"></div>
+                <div class="black-box"> <!-- Black box for the bottom -->
+                <!-- Add a Watch Trailer button with the YouTube icon as its content (hidden by default) -->
+                <button id="watchTrailerButton">
+                    <img src="./assets/icons/youtube.png" alt="youTubeIcon">
+                </button>
+                <button id="addToFavouritesButton">
+                    <img src="./assets/icons/add-favourites.png" alt="addFavourites">
+                </button>
+                </div>
                 <span class="close" onclick="closePopup()">&times;</span>
             </div>
         </div>        
