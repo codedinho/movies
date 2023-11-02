@@ -24,6 +24,13 @@ h1 {
     z-index: 1;
 }
 
+/* Media query for mobile devices with a maximum width of 767px */
+@media (max-width: 766px) {
+    h1 {
+        font-size: 15px;
+    }
+}
+
 header {
     background-color: #000000;
     display: flex;
@@ -64,7 +71,7 @@ header {
 .sidebar-menu {
     height: 100%;
     width: 200px;
-    background-color: #161616;
+    background-color: rgb(17, 17, 17);
     position: fixed;
     left: -200px; /* Move the sidebar outside the viewport on the left */
     top: 0;
@@ -88,9 +95,9 @@ header {
 }
 
 .search {
-    background-color: #252525;
+    background-color: rgb(17, 17, 17);
     border-radius: 50px;
-    color: #fff;
+    color: #ffffff;
     font-family: inherit;
     font-size: 1rem;
     padding: 0.5rem 1rem;
@@ -99,7 +106,7 @@ header {
 }
 
 .search::placeholder {
-    color: rgb(126, 126, 126);
+    color: rgb(185, 185, 185);
 }
 
 .search:focus {
@@ -129,13 +136,11 @@ main {
     border-radius: 3px;
     overflow: hidden;
     position: relative;
-    margin: 1rem; /* Add margin to create gaps between movies */
+    margin: 10px; /* Add margin to create gaps between movies */
     width: 200px; /* Set the desired width for movie containers */
     height: 300px; /* Set the desired height for movie containers */
-    border-radius: 20px;
-    margin-top: 100px;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5)
-
+    border-radius: 15px;
+    margin-top: 80px;
 }
 
 .movie:hover {
@@ -216,7 +221,7 @@ main {
 
 .movie img {
     width: 100%;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3)
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
 }
 
 .movie-info {
@@ -273,7 +278,7 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-thumb {
-    background-color: #0e0e0e;
+    background-color: rgb(17, 17, 17);
     border-radius: 5px;
 }
 
@@ -286,7 +291,7 @@ body::-webkit-scrollbar-track {
 }
 
 .overview::-webkit-scrollbar-thumb {
-    background-color: #0e0e0e;
+    background-color: rgb(17, 17, 17);
     border-radius: 3px;
 }
 
@@ -301,20 +306,17 @@ body::-webkit-scrollbar-track {
 }
 
 .movie-row::-webkit-scrollbar-thumb {
-    background-color: #0e0e0e;
+    background-color: rgb(17, 17, 17);
     border-radius: 10px;
 }
 
-.movie-row::-webkit-scrollbar-track {
-    background-color: #000000;
-}
 
 .movie-container::-webkit-scrollbar {
     width: 120px;
 }
 
 .movie-container::-webkit-scrollbar-thumb {
-    background-color: #0e0e0e;
+    background-color: rgb(17, 17, 17);
     border-radius: 10px;
 }
 
@@ -335,6 +337,7 @@ body::-webkit-scrollbar-track {
     z-index: 997;
 }
 
+
 .popup-content {
     background-size: cover;
     background-position: center;
@@ -343,7 +346,7 @@ body::-webkit-scrollbar-track {
     text-align: center;
     border-radius: 10px; /* Add border-radius for rounded corners */
     width: 100%; /* Set the content width to cover the entire screen */
-    height: 100%; /* Set the content height to cover the entire screen */
+    height: 80%; /* Set the content height to cover the entire screen */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -353,7 +356,6 @@ body::-webkit-scrollbar-track {
 /* Add this CSS to position movie details above the trailer */
 .movie-info-popup-container {
     border: none;
-    overflow: none;
     width: 100%;
     height: auto; /* Automatically adjust the height based on the width */
     overflow: visible;
@@ -384,6 +386,34 @@ body::-webkit-scrollbar-track {
     overflow: hidden; /* Ensure the content inside doesn't overflow */
 }
 
+.overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    padding: 20px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.movie-release-date {
+    font-size: 15px;
+    margin-top: -15px;
+}
+
+/* Media query to hide the title on screens smaller than 768px wide (mobile devices) */
+@media screen and (max-width: 768px) {
+    .movie-title {
+        display: none;
+    }
+    .movie-release-date {
+        display: none;
+    }
+}
+
 .movie-banner-container::before,
 .movie-banner-container::after {
     content: '';
@@ -402,9 +432,8 @@ body::-webkit-scrollbar-track {
 
 .movie-banner-container::after {
     bottom: 0;
+    
 }
-
-
 
 
 /* Media query for mobile devices with a maximum width of 767px */
@@ -454,7 +483,6 @@ body::-webkit-scrollbar-track {
 
 .film-of-the-day img {
     position: relative;
-    width: 65%; /* Set the desired width for the image */
     height: 200px;
     height: auto;
     object-fit: cover; /* Maintain aspect ratio while covering the area */
@@ -467,12 +495,6 @@ body::-webkit-scrollbar-track {
     .film-of-the-day img {
         width: 100%;
     }
-}
-
-/* Add CSS styles for the trailer button and movie info */
-.trailer-button {
-    text-align: center;
-    margin-top: 20px; /* Adjust the margin-top as needed to position the button */
 }
 
 #watchTrailerButton, #addToFavouritesButton {
@@ -521,7 +543,6 @@ body::-webkit-scrollbar-track {
     }
 }
 
-
 /* Add styles for the fading effect */
 .fading-overlay {
     position: absolute;
@@ -546,6 +567,6 @@ body::-webkit-scrollbar-track {
 /* Add styles for the black boxes */
 .black-box-top {
     background-color: #000; /* Black color for the boxes */
-    height: 60%; /* Adjust the height of the black boxes as needed */
+    height: 250px; /* Adjust the height of the black boxes as needed */
     width: 100%; /* Occupy full width of the parent element */
 }

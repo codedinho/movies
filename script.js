@@ -61,12 +61,16 @@ async function getMovies() {
             
             const releaseYear = release_date ? new Date(release_date).getFullYear() : 'N/A';
             
-            // Inside your JavaScript code where you set filmOfTheDayHTML
             const filmOfTheDayHTML = `
                 <div class="movie-banner-container">
+                    <div class="overlay">
+                        <h1 class="movie-title">${title}</h1>
+                        <p class="movie-release-date"><b>${releaseYear}</b></p>
+                    </div>
                     <img src="${backdropPath}" alt="${title}" class="backdrop-image" />
                 </div>
             `;
+            
 
             filmOfTheDayContainer.innerHTML = filmOfTheDayHTML;
 
@@ -95,13 +99,13 @@ async function getMovies() {
     const upcomingMovies = upcomingMoviesData.results.slice(0, 25); // Get the top 25 upcoming movies
 
     // Create a row for popular movies
-    const popularMoviesRow = createMovieRow("Top 25 Popular Movies", popularMovies);
+    const popularMoviesRow = createMovieRow("Popular Movies", popularMovies);
 
     // Create a row for new releases
     const newReleasesRow = createMovieRow("New Releases", newReleases);
 
     // Create a row for top-rated movies
-    const topRatedMoviesRow = createMovieRow("Top Rated Movies", topRatedMovies);
+    const topRatedMoviesRow = createMovieRow("Top Rated", topRatedMovies);
 
     // Create a row for upcoming movies
     const upcomingMoviesRow = createMovieRow("Upcoming Movies", upcomingMovies);
@@ -201,7 +205,7 @@ async function showMovies(movies) {
         <div class="overview">
             <h3>${title}</h3>
             <p>${overview}</p>
-            <p style="text-align: right;"><strong>${releaseYear}</strong> &nbsp;&bull;&nbsp; <strong>${runtime}m</strong></p>
+            <p style="text-align: right;"><strong>${releaseYear}</strong></p>
         </div>
     `;
 
@@ -293,6 +297,7 @@ async function openPopup(movieTitle) {
 
     // Construct YouTube search query for the official trailer
     const searchQuery = `${movieDetails.title} official trailer`;
+    
 
     // Populate movie information in the movieInfoDiv with the backdrop image as background
     movieInfoDiv.style.backgroundImage = `url('${IMGPATH + movieDetails.backdrop_path}')`;
@@ -328,9 +333,6 @@ async function openPopup(movieTitle) {
     // Append the vignette element to the movieInfoDiv
     movieInfoDiv.appendChild(vignette);
 
-
-
-
     // Remove previous event listeners (if any)
     if (watchTrailerButton) {
         watchTrailerButton.removeEventListener("click", handleWatchTrailerClick);
@@ -353,22 +355,21 @@ async function openPopup(movieTitle) {
     // Display the popup
     popup.style.display = "flex";
 }
-    
-        // Change the button image based on its state
-        const buttonImage = addToFavouritesButton.querySelector("img");
-        if (addToFavouritesButton.classList.contains("clicked")) {
-            // If the button is in the clicked state, change the image to remove-favourites.png
-            buttonImage.src = "./assets/icons/remove-favourites.png";
-    
-            // Add logic here for adding film to favorites
-            // addFilmToFavourites();
-        } else {
-            // If the button is not in the clicked state, revert the image to add-favourites.png
-            buttonImage.src = "./assets/icons/add-favourites.png";
-    
-            // Add logic here for removing film from favorites
-            // removeFilmFromFavourites();
-        }
+    // Change the button image based on its state
+    const buttonImage = addToFavouritesButton.querySelector("img");
+    if (addToFavouritesButton.classList.contains("clicked")) {
+        // If the button is in the clicked state, change the image to remove-favourites.png
+        buttonImage.src = "./assets/icons/remove-favourites.png";
+
+        // Add logic here for adding film to favorites
+        // addFilmToFavourites();
+    } else {
+        // If the button is not in the clicked state, revert the image to add-favourites.png
+        buttonImage.src = "./assets/icons/add-favourites.png";
+
+        // Add logic here for removing film from favorites
+        // removeFilmFromFavourites();
+    }
 
 
 // Function to close the popup window
