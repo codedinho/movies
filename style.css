@@ -141,6 +141,8 @@ main {
     height: 300px; /* Set the desired height for movie containers */
     border-radius: 15px;
     margin-top: 80px;
+    box-sizing: border-box;
+
 }
 
 .movie:hover {
@@ -159,13 +161,26 @@ main {
     text-align: center;
 }
 
+.movie-container { 
+    display: inline-flex; /* Use inline-flex for horizontal arrangement */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS devices */
+}
+
 .movie-row {
     width: 100%;
     height: 100%; /* Adjust the height as needed */
     overflow-x: auto;
     background-color: #000000; /* Set the background color of the container */
     text-align: left;
-    
+    padding:5px;
+    white-space: nowrap; /* Prevent line breaks between movie items */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth; /* Add smooth scrolling behavior for both horizontal and vertical scrolling */
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent line breaks between movie items */
 }
 
 .movie-rating {
@@ -186,13 +201,6 @@ main {
     top: 10px;
     right: 10px;
     font-weight: bold;
-}
-
-
-.movie-container {
-    display: inline-flex; /* Use inline-flex for horizontal arrangement */
-    flex-wrap: nowrap; /* Prevent movies from wrapping to the next line */
-    
 }
 
 
@@ -365,16 +373,16 @@ body::-webkit-scrollbar-track {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: #fff;
-    color: #333;
+    color: #ffffff;
     border: none;
     border-radius: 10px;
-    padding: 5px 10px;
+    padding: 2px 15px;
     cursor: pointer;
+    font-size: 30px;
 }
 
 .close:hover {
-    background-color: #3f3f3f;
+    background-color: #131313;
     color: #fff;
 }
 
@@ -498,7 +506,7 @@ body::-webkit-scrollbar-track {
 }
 
 #watchTrailerButton, #addToFavouritesButton {
-    background-color: rgb(22, 22, 22);    border: none;
+    background-color: rgb(22, 22, 22, 0);    border: none;
     color: #000; /* Button text color */
     cursor: pointer;
     color: #eee;
@@ -512,7 +520,7 @@ body::-webkit-scrollbar-track {
 }
 
 #watchTrailerButton:hover, #addToFavouritesButton:hover {
-    background-color: #252525;
+    background-color: #1a1a1a;
     border-radius: 10px;
 }
 

@@ -275,13 +275,33 @@ async function fetchMovieDetails(movieTitle) {
 
 // Named function for the Watch Trailer button click event
 function handleWatchTrailerClick(searchQuery) {
-    window.open(`https://www.youtube.com/results?search_query=sc${searchQuery}`);
+    window.open(`https://www.youtube.com/results?search_query=${searchQuery}`);
 }
 
-// Named function for the Add to Favorites button click event
+// Inside your handleAddToFavouritesClick function
 function handleAddToFavouritesClick() {
-    // Toggle logic and button image change here
+    const addToFavouritesButton = document.getElementById("addToFavouritesButton");
+
+    // Toggle the "clicked" class on the addToFavouritesButton element
+    addToFavouritesButton.classList.toggle("clicked");
+
+    // Change the button image based on its state
+    const buttonImage = addToFavouritesButton.querySelector("img");
+    if (addToFavouritesButton.classList.contains("clicked")) {
+        // If the button is in the clicked state, change the image to remove-favourites.png
+        buttonImage.src = "./assets/icons/remove-favourites.png";
+
+        // Add logic here for adding film to favorites
+        // addFilmToFavourites();
+    } else {
+        // If the button is not in the clicked state, revert the image to add-favourites.png
+        buttonImage.src = "./assets/icons/add-favourites.png";
+
+        // Add logic here for removing film from favorites
+        // removeFilmFromFavourites();
+    }
 }
+
 
 // Function to open the popup window with movie details and trailer
 async function openPopup(movieTitle) {
@@ -296,7 +316,7 @@ async function openPopup(movieTitle) {
     const releaseYear = movieDetails.release_date ? new Date(movieDetails.release_date).getFullYear() : 'N/A';
 
     // Construct YouTube search query for the official trailer
-    const searchQuery = `${movieDetails.title} official trailer`;
+    searchQuery = `${movieDetails.title} official trailer`;
     
 
     // Populate movie information in the movieInfoDiv with the backdrop image as background
@@ -372,6 +392,15 @@ async function openPopup(movieTitle) {
     }
 
 
+// Add event listener for the "keydown" event on the document
+document.addEventListener("keydown", function(event) {
+    // Check if the pressed key is "Esc" (keyCode 27)
+    if (event.keyCode === 27) {
+        // Call the closePopup function to close the popup window
+        closePopup();
+    }
+});
+
 // Function to close the popup window
 function closePopup() {
     // Check if the buttons are defined before removing event listeners
@@ -383,6 +412,7 @@ function closePopup() {
 
     document.getElementById("moviePopupWindow").style.display = "none";
 }
+
 
 document.addEventListener("DOMContentLoaded", function() {
     const sidebar = document.querySelector('.sidebar-icon');
