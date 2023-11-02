@@ -321,11 +321,22 @@ async function openPopup(movieTitle) {
 
     // Populate movie information in the movieInfoDiv with the backdrop image as background
     movieInfoDiv.style.backgroundImage = `url('${IMGPATH + movieDetails.backdrop_path}')`;
-    movieInfoDiv.style.backgroundSize = 'cover'; // Adjust the background size property as needed
-    movieInfoDiv.style.height = '1000px'; // Adjust the background size property as needed
-    movieInfoDiv.style.backgroundPosition = 'center'; // Adjust the background position property as needed
-    movieInfoDiv.style.color = '#ffffff'; // Set text color for better visibility against the backdrop
-    movieInfoDiv.style.position = 'relative'; // Set the position to relative for positioning the pseudo-element
+    // Check if the screen width is less than or equal to 767 pixels (considered as a mobile device)
+    if (window.innerWidth <= 767) {
+        movieInfoDiv.style.backgroundSize = 'cover';
+        movieInfoDiv.style.height = '500px'; // Set the background height to 500px on mobile devices
+        movieInfoDiv.style.backgroundPosition = 'center';
+        movieInfoDiv.style.color = '#ffffff';
+        movieInfoDiv.style.position = 'relative';
+    }
+    else {
+        // For larger screens, set different styles or use default values
+        movieInfoDiv.style.backgroundSize = 'cover';
+        movieInfoDiv.style.height = '2000px';
+        movieInfoDiv.style.backgroundPosition = 'center';
+        movieInfoDiv.style.color = '#ffffff';
+        movieInfoDiv.style.position = 'relative';
+    }
 
     // Set display to flex and use flex-direction, justify-content, and align-items properties for centering
     movieInfoDiv.style.display = 'flex';

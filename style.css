@@ -175,12 +175,6 @@ main {
     background-color: #000000; /* Set the background color of the container */
     text-align: left;
     padding:5px;
-    white-space: nowrap; /* Prevent line breaks between movie items */
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth; /* Add smooth scrolling behavior for both horizontal and vertical scrolling */
-    overflow-y: hidden; /* Hide vertical scrollbar */
-    overflow-x: auto; /* Enable horizontal scrolling */
-    white-space: nowrap; /* Prevent line breaks between movie items */
 }
 
 .movie-rating {
@@ -367,6 +361,14 @@ body::-webkit-scrollbar-track {
     width: 100%;
     height: auto; /* Automatically adjust the height based on the width */
     overflow: visible;
+}
+
+/* Media query for mobile devices with a maximum width of 767px */
+@media (max-width: 767px) {
+    .movie-info-popup-container {
+        width: 100%;
+        height: 100px;
+    }
 }
 
 .close {
@@ -563,6 +565,7 @@ body::-webkit-scrollbar-track {
     background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)) top,
                 linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)) bottom;
     z-index: 0;
+    
 }
 
 /* Add styles for the black boxes */
@@ -575,6 +578,6 @@ body::-webkit-scrollbar-track {
 /* Add styles for the black boxes */
 .black-box-top {
     background-color: #000; /* Black color for the boxes */
-    height: 250px; /* Adjust the height of the black boxes as needed */
+    height: 10%; /* Adjust the height of the black boxes as needed */
     width: 100%; /* Occupy full width of the parent element */
 }
