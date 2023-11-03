@@ -8,6 +8,28 @@
     </head>
     <body>
         <div class="sidebar-menu"></div>
+        <div class="black-box-bottom"></div> <!-- Black box for the bottom -->
+        <div class="bottom-menu">
+            <div class="bottom-menu-icon">
+                <img src="./assets/icons/home-icon-white.png" alt="Home">
+                <span>Home</span>
+            </div>
+            <div class="bottom-menu-icon">
+                <img src="./assets/icons/feed-icon-white.png" alt="Feed">
+                <span>Feed</span>
+            </div>
+            <div class="bottom-menu-icon" id="post-icon-bottom-menu">
+                <img src="./assets/icons/post-icon-white.png" alt="Post">
+            </div>
+            <div class="bottom-menu-icon">
+                <img src="./assets/icons/group-icon-white.png" alt="Group">
+                <span>Group</span>
+            </div>
+            <div class="bottom-menu-icon">
+                <img src="./assets/icons/profile-icon-white.png" alt="Profile">
+                <span>Profile</span>
+            </div>
+        </div>                
         <header>
             <div class="menu-icon">
                 <div class="sidebar-icon">
@@ -36,14 +58,18 @@
                 <h2></h2>
                 <div class="black-box-top"></div> <!-- Black box for the bottom -->
                 <div id="movie-info-popup" class="movie-info-popup-container"></div>
-                <div class="black-box"> <!-- Black box for the bottom -->
+                <div class="black-box"></div> <!-- Black box for the bottom -->
                 <!-- Add a Watch Trailer button with the YouTube icon as its content (hidden by default) -->
-                <button id="watchTrailerButton">
-                    <img src="./assets/icons/youtube.png" alt="youTubeIcon">
-                </button>
-                <button id="addToFavouritesButton">
-                    <img src="./assets/icons/add-favourites.png" alt="addFavourites">
-                </button>
+                <div class="popup-icon-buttons">
+                    <button id="watchTrailerButton">
+                        <img src="./assets/icons/youtube.png" alt="youTubeIcon">
+                    </button>
+                    <button id="addToFavouritesButton">
+                        <img src="./assets/icons/add-favourites.png" alt="addFavourites">
+                    </button>
+                    <button id="addToPlaylistButton">
+                        <img src="./assets/icons/add-white.png" alt="addToPlaylistButton">
+                    </button>
                 </div>
                 <span class="close" onclick="closePopup()">&times;</span>
             </div>

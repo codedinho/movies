@@ -60,19 +60,30 @@ async function getMovies() {
             const backdropPath = backdrop_path ? `${IMGPATH}${backdrop_path}` : ''; // Construct the backdrop image URL
             
             const releaseYear = release_date ? new Date(release_date).getFullYear() : 'N/A';
+
             
             const filmOfTheDayHTML = `
-                <div class="movie-banner-container">
-                    <div class="overlay">
-                        <h1 class="movie-title">${title}</h1>
-                        <p class="movie-release-date"><b>${releaseYear}</b></p>
+            <div class="movie-banner-container">
+                <div class="overlay">
+                    <h1 class="movie-title">${title}</h1>
+                    <p class="movie-release-date"><b>${releaseYear}</b></p>
+                    <div class="button-container">
+                        <button class="watchTrailerButton">
+                            <img src="./assets/icons/youtube.png" alt="YouTube Icon">
+                        </button>
+                        <button class="addToFavouritesButton">
+                            <img src="./assets/icons/add-favourites.png" alt="Add to Favorites Icon">
+                        </button>
+                        <button class="addToPlaylistButton">
+                            <img src="./assets/icons/add-white.png" alt="Add to Playlist Icon">
+                        </button>
                     </div>
-                    <img src="${backdropPath}" alt="${title}" class="backdrop-image" />
                 </div>
-            `;
-            
+                <img src="${backdropPath}" alt="${title}" class="backdrop-image" />
+            </div>
+        `;  
 
-            filmOfTheDayContainer.innerHTML = filmOfTheDayHTML;
+        filmOfTheDayContainer.innerHTML = filmOfTheDayHTML;
 
             
         } else {
@@ -281,7 +292,6 @@ function handleWatchTrailerClick(searchQuery) {
 // Inside your handleAddToFavouritesClick function
 function handleAddToFavouritesClick() {
     const addToFavouritesButton = document.getElementById("addToFavouritesButton");
-
     // Toggle the "clicked" class on the addToFavouritesButton element
     addToFavouritesButton.classList.toggle("clicked");
 
@@ -302,6 +312,12 @@ function handleAddToFavouritesClick() {
     }
 }
 
+// Inside your handleAddToFavouritesClick function
+function handleAddToPlaylistClick() {
+    return;
+}
+
+
 
 // Function to open the popup window with movie details and trailer
 async function openPopup(movieTitle) {
@@ -312,6 +328,7 @@ async function openPopup(movieTitle) {
     // Replace the following line with your actual API call to fetch movie details
     const movieDetails = await fetchMovieDetails(movieTitle);
     const watchTrailerButton = document.getElementById("watchTrailerButton");
+    const addToPlaylistButton = document.getElementById("addToPlaylistButton");
     const addToFavouritesButton = document.getElementById("addToFavouritesButton");
     const releaseYear = movieDetails.release_date ? new Date(movieDetails.release_date).getFullYear() : 'N/A';
 
@@ -324,7 +341,7 @@ async function openPopup(movieTitle) {
     // Check if the screen width is less than or equal to 767 pixels (considered as a mobile device)
     if (window.innerWidth <= 767) {
         movieInfoDiv.style.backgroundSize = 'cover';
-        movieInfoDiv.style.height = '500px'; // Set the background height to 500px on mobile devices
+        movieInfoDiv.style.height = '650px'; // Set the background height to 500px on mobile devices
         movieInfoDiv.style.backgroundPosition = 'center';
         movieInfoDiv.style.color = '#ffffff';
         movieInfoDiv.style.position = 'relative';
@@ -332,7 +349,7 @@ async function openPopup(movieTitle) {
     else {
         // For larger screens, set different styles or use default values
         movieInfoDiv.style.backgroundSize = 'cover';
-        movieInfoDiv.style.height = '2000px';
+        movieInfoDiv.style.height = '425px';
         movieInfoDiv.style.backgroundPosition = 'center';
         movieInfoDiv.style.color = '#ffffff';
         movieInfoDiv.style.position = 'relative';
@@ -364,13 +381,6 @@ async function openPopup(movieTitle) {
     // Append the vignette element to the movieInfoDiv
     movieInfoDiv.appendChild(vignette);
 
-    // Remove previous event listeners (if any)
-    if (watchTrailerButton) {
-        watchTrailerButton.removeEventListener("click", handleWatchTrailerClick);
-    }
-    if (addToFavouritesButton) {
-        addToFavouritesButton.removeEventListener("click", handleAddToFavouritesClick);
-    }
 
     // Assign the buttons to the global variables
 
@@ -383,23 +393,21 @@ async function openPopup(movieTitle) {
         handleAddToFavouritesClick();
     });
 
+    // Add event listeners using named functions
+    addToPlaylistButton.addEventListener("click", () => {
+        handleAddToPlaylistClick();
+    });
+
     // Display the popup
     popup.style.display = "flex";
 }
     // Change the button image based on its state
     const buttonImage = addToFavouritesButton.querySelector("img");
+
     if (addToFavouritesButton.classList.contains("clicked")) {
         // If the button is in the clicked state, change the image to remove-favourites.png
         buttonImage.src = "./assets/icons/remove-favourites.png";
 
-        // Add logic here for adding film to favorites
-        // addFilmToFavourites();
-    } else {
-        // If the button is not in the clicked state, revert the image to add-favourites.png
-        buttonImage.src = "./assets/icons/add-favourites.png";
-
-        // Add logic here for removing film from favorites
-        // removeFilmFromFavourites();
     }
 
 
@@ -415,10 +423,12 @@ document.addEventListener("keydown", function(event) {
 // Function to close the popup window
 function closePopup() {
     // Check if the buttons are defined before removing event listeners
-    if (watchTrailerButton && addToFavouritesButton) {
+    if (watchTrailerButton && addToFavouritesButton && addToPlaylistButton) {
         // Remove event listeners
         watchTrailerButton.removeEventListener("click", handleWatchTrailerClick);
         addToFavouritesButton.removeEventListener("click", handleAddToFavouritesClick);
+        addToPlaylistButton.removeEventListener("click", handleAddToPlaylistClick);
+
     }
 
     document.getElementById("moviePopupWindow").style.display = "none";

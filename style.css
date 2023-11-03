@@ -37,7 +37,7 @@ header {
     justify-content: flex-start; /* Align items to the left */
     align-items: center; /* Center items vertically */
     padding: 1rem;
-    z-index: 199;
+    z-index: 9999;
 }
 
 .menu-icon {
@@ -45,7 +45,7 @@ header {
     flex-direction: column;
     cursor: pointer;
     margin-right: 20px;
-    z-index: 200;
+    z-index: 9999;
 }
 
 .bar {
@@ -80,7 +80,7 @@ header {
     justify-content: space-around;
     align-items: center;
     padding: 20px;
-    z-index: 100;
+    z-index: 9999;
     transition: left 1s ease; /* Slow down the sliding effect (0.5 seconds duration) */
     margin-right: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Add a box shadow with a 10px blur and 0.5 opacity */
@@ -93,6 +93,63 @@ header {
 .sidebar-menu.closed {
     left: -200; /* Move the sidebar to the left when the open class is present */
 }
+
+.bottom-menu {
+    position: fixed;
+    bottom: 0;
+    height: 80px;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center icons vertically */
+    padding: 10px 0;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    z-index: 9999;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+}
+
+.bottom-menu-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#post-icon-bottom-menu img{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 5px;
+    width: 45px;
+    height: 45px;
+}
+
+.bottom-menu-icon img {
+    width: 25px;
+    height: 25px;
+}
+
+.bottom-menu-icon span {
+    margin-top: 2px;
+    margin-right: 25px; /* Adjust the space between icon and text */
+    margin-left: 25px; /* Adjust the space between icon and text */
+}
+
+
+
+.sidebar-menu .menu-icon {
+    width: 30px; /* Set the width of your icon */
+    height: 30px; /* Set the height of your icon */
+    background-color: white; /* Background color of the icon */
+    border-radius: 50%; /* Make it a circle */
+}
+
+.sidebar-menu .menu-icon img {
+    width: 100%; /* Make the icon fill the circle */
+    height: 100%;
+}
+
 
 .search {
     background-color: rgb(17, 17, 17);
@@ -133,7 +190,6 @@ main {
 
 .movie {
     background-color: rgb(26, 26, 26);
-    border-radius: 3px;
     overflow: hidden;
     position: relative;
     margin: 10px; /* Add margin to create gaps between movies */
@@ -146,7 +202,7 @@ main {
 }
 
 .movie:hover {
-    filter: brightness(1.35);
+    filter: brightness(1.25);
 }
 
 .movie .movie-info,
@@ -273,19 +329,19 @@ main {
     transform: translateY(0);
 }
 
-/* Add this CSS to style the scrollbar */
+/* Hide scrollbar by default */
 body::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 0;
+    height: 0;
 }
 
+/* Add styles to scrollbar when it is in active state */
 body::-webkit-scrollbar-thumb {
-    background-color: rgb(17, 17, 17);
-    border-radius: 5px;
+    background-color: #888; /* Color of the thumb */
 }
 
-body::-webkit-scrollbar-track {
-    background-color: #000000;
+body::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color of the thumb on hover */
 }
 /* Custom scrollbar styles for the overview section */
 .overview::-webkit-scrollbar {
@@ -336,7 +392,7 @@ body::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 1);
     justify-content: center;
     align-items: center;
-    z-index: 997;
+    z-index: 9999;
 }
 
 
@@ -426,6 +482,7 @@ body::-webkit-scrollbar-track {
 
 .movie-banner-container::before,
 .movie-banner-container::after {
+    bottom: 0;
     content: '';
     position: absolute;
     left: 0;
@@ -440,6 +497,7 @@ body::-webkit-scrollbar-track {
     transform: scaleY(-1); /* Flip the gradient upside down */
 }
 
+.movie-banner-container::before,
 .movie-banner-container::after {
     bottom: 0;
     
@@ -484,20 +542,11 @@ body::-webkit-scrollbar-track {
     width: 100%;
     box-sizing: border-box;
     color: #ffffff;
-    z-index: 2;
+    z-index: 1;
     border-radius: 0px;
     text-align: center;
     overflow: hidden;
     object-fit: cover;
-}
-
-.film-of-the-day img {
-    position: relative;
-    height: 200px;
-    height: auto;
-    object-fit: cover; /* Maintain aspect ratio while covering the area */
-    border-radius: 10px; /* Add border radius for rounded corners */
-    box-shadow: 10px 10px 25px 0px rgba(14, 14, 14, 0.75); /* Add a shadow effect */
 }
 
 
@@ -507,7 +556,9 @@ body::-webkit-scrollbar-track {
     }
 }
 
-#watchTrailerButton, #addToFavouritesButton {
+#watchTrailerButton, 
+#addToFavouritesButton,
+#addToPlaylistButton {
     background-color: rgb(22, 22, 22, 0);    border: none;
     color: #000; /* Button text color */
     cursor: pointer;
@@ -521,19 +572,64 @@ body::-webkit-scrollbar-track {
     margin: 10px;
 }
 
-#watchTrailerButton:hover, #addToFavouritesButton:hover {
-    background-color: #1a1a1a;
+#watchTrailerButton:hover, 
+#addToFavouritesButton:hover,
+#addToPlaylistButton:hover {
+    background-color: rgb(26, 26, 26, 0.3);
     border-radius: 10px;
 }
 
-#watchTrailerButton IMG, #addToFavouritesButton IMG{
+#watchTrailerButton IMG, 
+#addToFavouritesButton IMG,
+#addToPlaylistButton IMG{
     background-color: rgba(0, 0, 0, 0);
     border: none;
     color: #000; /* Button text color */
     cursor: pointer;
     width: 35px;
-    
 }
+
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Align items to the end of the container (right) */
+    margin-top: auto; /* Push the container to the bottom of the overlay */
+}
+
+.watchTrailerButton,
+.addToFavouritesButton,
+.addToPlaylistButton {
+    background-color: rgb(22, 22, 22, 0);
+    border: none;
+    color: #000; /* Button text color */
+    cursor: pointer;
+    color: #eee;
+    text-align: center;
+    font-weight: 750;
+    font-size: 16px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 15px;
+    margin-top: 250px; /* Adjust this value to move the buttons down */
+    z-index: 9999;
+}
+
+.watchTrailerButton:hover,
+.addToFavouritesButton:hover,
+.addToPlaylistButton:hover {
+    background-color: rgb(26, 26, 26, 0.5);
+    border-radius: 10px;
+}
+
+.watchTrailerButton img,
+.addToFavouritesButton img,
+.addToPlaylistButton img {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    color: #000; /* Button text color */
+    cursor: pointer;
+    width: 35px;
+}
+
 
 /* Default styles for the movie poster */
 .movie-poster {
@@ -551,7 +647,13 @@ body::-webkit-scrollbar-track {
     .movie-row::-webkit-scrollbar {
         display: none;
     }
+    .watchTrailerButton,
+    .addToFavouritesButton,
+    .addToPlaylistButton {
+        margin-top: 120px; /* Adjust this value to move the buttons down */
+    }
 }
+
 
 /* Add styles for the fading effect */
 .fading-overlay {
@@ -568,16 +670,31 @@ body::-webkit-scrollbar-track {
     
 }
 
+.black-box-bottom {
+    position: fixed;
+    bottom: 80px; /* Adjust the value based on the height of your bottom menu */
+    background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)); /* Use a gradient from black to transparent */
+    height: 10%; /* Adjust the height of the black boxes as needed */
+    width: 100%; /* Occupy full width of the parent element */
+    z-index: 100; /* Set a z-index lower than the bottom menu to ensure it appears above the content */
+}
+
+
 /* Add styles for the black boxes */
 .black-box {
     background-color: #000; /* Black color for the boxes */
-    height: 100%; /* Adjust the height of the black boxes as needed */
+    height: auto; /* Adjust the height of the black boxes as needed */
     width: 100%; /* Occupy full width of the parent element */
 }
 
 /* Add styles for the black boxes */
 .black-box-top {
     background-color: #000; /* Black color for the boxes */
-    height: 10%; /* Adjust the height of the black boxes as needed */
+    height: auto; /* Adjust the height of the black boxes as needed */
     width: 100%; /* Occupy full width of the parent element */
+}
+
+.popup-icon-buttons {
+    width: 100%; /* Occupy full width of the parent element */
+    z-index: 9999;
 }
