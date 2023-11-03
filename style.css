@@ -10,6 +10,7 @@ body {
     margin: 0;
     position: relative;
     overflow-x: hidden; /* Prevent horizontal scrollbar when the sidebar is open */
+    margin-bottom: 100px;
 }
 
 p {
@@ -38,7 +39,10 @@ header {
     align-items: center; /* Center items vertically */
     padding: 1rem;
     z-index: 9999;
+    position: sticky;
+    top: 0;
 }
+
 
 .menu-icon {
     display: flex;
