@@ -122,7 +122,7 @@ header {
     align-items: center;
 }
 
-#post-icon-bottom-menu img{
+.post-icon-bottom-menu img{
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 5px;
