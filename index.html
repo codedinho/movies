@@ -10,26 +10,27 @@
         <div class="sidebar-menu"></div>
         <div class="black-box-bottom"></div> <!-- Black box for the bottom -->
         <div class="bottom-menu">
-            <div class="bottom-menu-icon">
+            <div class="bottom-menu-icon active" id="homeTab" onclick="switchTab('homeTab', 'homeSection')">
                 <img src="./assets/icons/home-icon-white.png" alt="Home">
                 <span>Home</span>
             </div>
-            <div class="bottom-menu-icon">
+            <div class="bottom-menu-icon" id="feedTab" onclick="switchTab('feedTab', 'feedSection')">
                 <img src="./assets/icons/feed-icon-white.png" alt="Feed">
                 <span>Feed</span>
             </div>
-            <div class="bottom-menu-icon" id="post-icon-bottom-menu">
+            <div class="bottom-menu-icon" id="postTab" onclick="switchTab('postTab', 'postSection')">
                 <img src="./assets/icons/post-icon-white.png" alt="Post">
+                <span>Post</span>
             </div>
-            <div class="bottom-menu-icon">
+            <div class="bottom-menu-icon" id="groupTab" onclick="switchTab('groupTab', 'groupSection')">
                 <img src="./assets/icons/group-icon-white.png" alt="Group">
                 <span>Group</span>
             </div>
-            <div class="bottom-menu-icon">
+            <div class="bottom-menu-icon" id="profileTab" onclick="switchTab('profileTab', 'profileSection')">
                 <img src="./assets/icons/profile-icon-white.png" alt="Profile">
                 <span>Profile</span>
             </div>
-        </div>     
+        </div>            
         <header>
             <div class="menu-icon">
                 <div class="sidebar-icon">
@@ -47,7 +48,8 @@
                     class="search"
                 />
             </form>
-        </header>       
+        </header> 
+        <div id="homeSection" class="tab-content">      
         <div class="black-box-header"></div> <!-- Black box for the bottom -->           
         <main class="movie-banner-container" id="main-banner">
             <div class="film-of-the-day-container" id="film-of-the-day">
@@ -79,15 +81,18 @@
                 <span class="close" onclick="closePopup()">&times;</span>
             </div>
         </div> 
-        <!-- Include jQuery library -->
-
-        <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-        <!-- jQuery UI (after jQuery) -->
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
-
-        <script src="script.js" defer></script>
-    </body>
+    </div>
+    <div id="feedSection" class="tab-content">
+        <!-- Content for Feed tab goes here -->
+    </div>
+    
+    <div id="groupSection" class="tab-content">
+        <!-- Content for Group tab goes here -->
+    </div>
+    
+    <div id="profileSection" class="tab-content">
+        <!-- Content for Profile tab goes here -->
+    </div>
+    <script src="script.js" defer></script>
+</body>
 </html>

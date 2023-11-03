@@ -490,3 +490,26 @@ movieContainers.forEach(movieContainer => {
         isMouseDown = false;
     });
 });
+
+
+function switchTab(tabId, sectionId) {
+    // Get tab elements
+    const tabs = ["homeTab", "feedTab", "groupTab", "profileTab", "postTab"];
+    const sections = ["homeSection", "feedSection", "groupSection", "profileSection", "profileSection"];
+
+    // Hide all sections and deactivate all tabs
+    for (let i = 0; i < tabs.length; i++) {
+        const tab = document.getElementById(tabs[i]);
+        const section = document.getElementById(sections[i]);
+
+        tab.classList.remove("active");
+        section.style.display = "none";
+    }
+
+    // Show the selected section and activate the selected tab
+    const selectedTab = document.getElementById(tabId);
+    const selectedSection = document.getElementById(sectionId);
+
+    selectedTab.classList.add("active");
+    selectedSection.style.display = "block";
+}
