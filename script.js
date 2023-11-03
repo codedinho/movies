@@ -10,7 +10,6 @@ const search = document.getElementById("search");
 let popularMovies = []; // Declare popularMovies variable here
 let topRatedMovies = []; // Declare popularMovies variable here
 
-
 // initially get fav movies
 getMovies();
 
@@ -126,7 +125,6 @@ async function getMovies() {
     main.appendChild(topRatedMoviesRow);
     main.appendChild(upcomingMoviesRow);
 }
-
 
 function createMovieRow(title, movies) {
     const row = document.createElement("div");
@@ -457,5 +455,38 @@ document.addEventListener("DOMContentLoaded", function() {
 
             sidebarMenu.classList.toggle('closed');
         }
+    });
+});
+
+// Get all movie containers
+const movieContainers = document.querySelectorAll('.movie-container');
+
+// Variables to track mouse events
+let isMouseDown = false;
+let startX;
+let scrollLeft;
+
+// Add mouse events to each movie container
+movieContainers.forEach(movieContainer => {
+    movieContainer.addEventListener('mousedown', (e) => {
+        isMouseDown = true;
+        startX = e.pageX - movieContainer.offsetLeft;
+        scrollLeft = movieContainer.scrollLeft;
+    });
+
+    movieContainer.addEventListener('mousemove', (e) => {
+        if (!isMouseDown) return;
+        e.preventDefault();
+        const x = e.pageX - movieContainer.offsetLeft;
+        const walk = (x - startX) * 2; // Adjust the scroll speed if needed
+        movieContainer.scrollLeft = scrollLeft - walk;
+    });
+
+    movieContainer.addEventListener('mouseup', () => {
+        isMouseDown = false;
+    });
+
+    movieContainer.addEventListener('mouseleave', () => {
+        isMouseDown = false;
     });
 });

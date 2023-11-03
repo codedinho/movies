@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Movie App</title>
         <link rel="stylesheet" href="style.css" />
     </head>
@@ -29,7 +29,7 @@
                 <img src="./assets/icons/profile-icon-white.png" alt="Profile">
                 <span>Profile</span>
             </div>
-        </div>                
+        </div>     
         <header>
             <div class="menu-icon">
                 <div class="sidebar-icon">
@@ -48,15 +48,20 @@
                 />
             </form>
         </header>       
+        <div class="black-box-header"></div> <!-- Black box for the bottom -->           
         <main class="movie-banner-container" id="main-banner">
             <div class="film-of-the-day-container" id="film-of-the-day">
         </div>
         </main>        
-        <main class="movie-row" id="main"></main>
-        <div id="moviePopupWindow" class="popup">
+            <main id="main">
+                <div class="movie-row" id="popularMoviesRow"></div>
+                <div class="movie-row" id="newReleasesRow"></div>
+                <div class="movie-row" id="topRatedMoviesRow"></div>
+                <div class="movie-row" id="upcomingMoviesRow"></div>
+            </main>
+                <div id="moviePopupWindow" class="popup">
             <div class="popup-content">
                 <h2></h2>
-                <div class="black-box-top"></div> <!-- Black box for the bottom -->
                 <div id="movie-info-popup" class="movie-info-popup-container"></div>
                 <div class="black-box"></div> <!-- Black box for the bottom -->
                 <!-- Add a Watch Trailer button with the YouTube icon as its content (hidden by default) -->
@@ -73,8 +78,16 @@
                 </div>
                 <span class="close" onclick="closePopup()">&times;</span>
             </div>
-        </div>        
+        </div> 
+        <!-- Include jQuery library -->
+
+        <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- jQuery UI (after jQuery) -->
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
         <script src="script.js" defer></script>
     </body>
 </html>

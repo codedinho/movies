@@ -10,7 +10,7 @@ body {
     margin: 0;
     position: relative;
     overflow-x: hidden; /* Prevent horizontal scrollbar when the sidebar is open */
-    margin-bottom: 100px;
+    margin-bottom: 165px;
 }
 
 p {
@@ -41,6 +41,7 @@ header {
     z-index: 9999;
     position: sticky;
     top: 0;
+    height: 80px;
 }
 
 
@@ -75,7 +76,7 @@ header {
 .sidebar-menu {
     height: 100%;
     width: 200px;
-    background-color: rgb(17, 17, 17);
+    background-color: rgb(12, 12, 12);
     position: fixed;
     left: -200px; /* Move the sidebar outside the viewport on the left */
     top: 0;
@@ -87,7 +88,7 @@ header {
     z-index: 9999;
     transition: left 1s ease; /* Slow down the sliding effect (0.5 seconds duration) */
     margin-right: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); /* Add a box shadow with a 10px blur and 0.5 opacity */
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }
 
 .sidebar-menu.open {
@@ -164,6 +165,7 @@ header {
     padding: 0.5rem 1rem;
     border: none;
     z-index: 9999;
+    width: 250px;
 }
 
 .search::placeholder {
@@ -188,8 +190,8 @@ main {
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: flex-start;
-    height: 100%;
     box-sizing: border-box;
+    
 }
 
 .movie {
@@ -202,7 +204,6 @@ main {
     border-radius: 15px;
     margin-top: 80px;
     box-sizing: border-box;
-
 }
 
 .movie:hover {
@@ -221,20 +222,17 @@ main {
     text-align: center;
 }
 
-.movie-container { 
-    display: inline-flex; /* Use inline-flex for horizontal arrangement */
-    overflow-x: auto; /* Enable horizontal scrolling */
-    overflow-y: hidden; /* Hide vertical scrollbar */
-    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS devices */
+.movie-row {
+    display: flex;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
 }
 
-.movie-row {
-    width: 100%;
-    height: 100%; /* Adjust the height as needed */
-    overflow-x: auto;
-    background-color: #000000; /* Set the background color of the container */
-    text-align: left;
-    padding:5px;
+.movie-container {
+    display: inline-flex;
 }
 
 .movie-rating {
@@ -373,19 +371,6 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 
-.movie-container::-webkit-scrollbar {
-    width: 120px;
-}
-
-.movie-container::-webkit-scrollbar-thumb {
-    background-color: rgb(17, 17, 17);
-    border-radius: 10px;
-}
-
-.movie-container::-webkit-scrollbar-track {
-    background-color: #000000;
-}
-
 .popup {
     display: none;
     position: fixed;
@@ -467,8 +452,14 @@ body::-webkit-scrollbar-thumb:hover {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
+    z-index: 100;
 }
 
+@media (max-width: 767px) {
+    .overlay {
+        display: none;
+    }
+}
 .movie-release-date {
     font-size: 15px;
     margin-top: -15px;
@@ -486,26 +477,23 @@ body::-webkit-scrollbar-thumb:hover {
 
 .movie-banner-container::before,
 .movie-banner-container::after {
-    bottom: 0;
     content: '';
     position: absolute;
     left: 0;
     width: 100%;
-    height: 50%; /* Adjust the height of the gradient overlay as needed */
+    height: 20%; /* Adjust the height of the gradient overlay as needed */
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000);
     pointer-events: none; /* Ensure the overlay doesn't interfere with interactions */
 }
 
 .movie-banner-container::before {
-    top: 0;
-    transform: scaleY(-1); /* Flip the gradient upside down */
+    bottom: 0; /* Positioned at the bottom */
 }
 
-.movie-banner-container::before,
 .movie-banner-container::after {
-    bottom: 0;
-    
+    bottom: 0; /* Positioned at the top */
 }
+
 
 
 /* Media query for mobile devices with a maximum width of 767px */
@@ -557,6 +545,9 @@ body::-webkit-scrollbar-thumb:hover {
 @media (max-width: 766px) {
     .film-of-the-day img {
         width: 100%;
+    }
+    .film-of-the-day-container {
+        height: 250px
     }
 }
 
@@ -683,7 +674,6 @@ body::-webkit-scrollbar-thumb:hover {
     z-index: 100; /* Set a z-index lower than the bottom menu to ensure it appears above the content */
 }
 
-
 /* Add styles for the black boxes */
 .black-box {
     background-color: #000; /* Black color for the boxes */
@@ -691,14 +681,24 @@ body::-webkit-scrollbar-thumb:hover {
     width: 100%; /* Occupy full width of the parent element */
 }
 
-/* Add styles for the black boxes */
-.black-box-top {
-    background-color: #000; /* Black color for the boxes */
-    height: auto; /* Adjust the height of the black boxes as needed */
-    width: 100%; /* Occupy full width of the parent element */
+.black-box-header {
+    position: fixed;
+    top: 80px;
+    height: 10%; /* 10% of the viewport height */
+    width: 100%;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
+
 
 .popup-icon-buttons {
     width: 100%; /* Occupy full width of the parent element */
     z-index: 9999;
+}
+
+.movie-container-scroll-row {
+    width: 100%; /* Set a fixed width for the container */
+    overflow-x: hidden; /* Hide the horizontal overflow */
+    display: flex;
+    flex-direction: row;
 }
