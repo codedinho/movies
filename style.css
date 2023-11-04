@@ -158,6 +158,13 @@ header {
     padding:5px;
 }
 
+@media (min-width: 766px) {
+    .bottom-menu-icon img {
+        margin-right: 30px; /* Adjust the space between icon and text */
+        margin-left: 30px; /* Adjust the space between icon and text */
+    }
+}
+
 .sidebar-menu .menu-icon {
     width: 30px; /* Set the width of your icon */
     height: 30px; /* Set the height of your icon */
