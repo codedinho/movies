@@ -1,3 +1,62 @@
+//This site uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.
+
+const ACTION_GENRE_ID = 28;
+const ACTION_GENRE_NAME = 'Action';
+
+const ADVENTURE_GENRE_ID = 12;
+const ADVENTURE_GENRE_NAME = 'Adventure';
+
+const ANIMATION_GENRE_ID = 16;
+const ANIMATION_GENRE_NAME = 'Animation';
+
+const COMEDY_GENRE_ID = 35;
+const COMEDY_GENRE_NAME = 'Comedy';
+
+const CRIME_GENRE_ID = 80;
+const CRIME_GENRE_NAME = 'Crime';
+
+const DOCUMENTARY_GENRE_ID = 99;
+const DOCUMENTARY_GENRE_NAME = 'Documentary';
+
+const DRAMA_GENRE_ID = 18;
+const DRAMA_GENRE_NAME = 'Drama';
+
+const FAMILY_GENRE_ID = 10751;
+const FAMILY_GENRE_NAME = 'Family';
+
+const FANTASY_GENRE_ID = 14;
+const FANTASY_GENRE_NAME = 'Fantasy';
+
+const HISTORY_GENRE_ID = 36;
+const HISTORY_GENRE_NAME = 'History';
+
+const HORROR_GENRE_ID = 27;
+const HORROR_GENRE_NAME = 'Horror';
+
+const MUSIC_GENRE_ID = 10402;
+const MUSIC_GENRE_NAME = 'Music';
+
+const MYSTERY_GENRE_ID = 9648;
+const MYSTERY_GENRE_NAME = 'Mystery';
+
+const ROMANCE_GENRE_ID = 10749;
+const ROMANCE_GENRE_NAME = 'Romance';
+
+const SCIENCE_FICTION_GENRE_ID = 878;
+const SCIENCE_FICTION_GENRE_NAME = 'Science Fiction';
+
+const TV_MOVIE_GENRE_ID = 10770;
+const TV_MOVIE_GENRE_NAME = 'TV Movie';
+
+const THRILLER_GENRE_ID = 53;
+const THRILLER_GENRE_NAME = 'Thriller';
+
+const WAR_GENRE_ID = 10752;
+const WAR_GENRE_NAME = 'War';
+
+const WESTERN_GENRE_ID = 37;
+const WESTERN_GENRE_NAME = 'Western';
+
 const APIURL =
     "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=03cab8d210313d38cea2863da37f0978&page=1";
 const IMGPATH = "https://image.tmdb.org/t/p/w1280";
@@ -13,23 +72,23 @@ let topRatedMovies = []; // Declare popularMovies variable here
 // initially get fav movies
 getMovies();
 
-function updateFilmOfTheDay() {
-            // Find a random movie rated over 8
-            const eligibleMovies = popularMovies.concat(topRatedMovies).filter(movie => movie.vote_average > 7);
+async function updateFilmOfTheDay(movieId) {
+    console.log("Updating film of the day...");
 
-            if (eligibleMovies.length > 0) {
-                const randomIndex = Math.floor(Math.random() * eligibleMovies.length);
-                const filmOfTheDay = eligibleMovies[randomIndex];
-        
-                const filmOfTheDayContainer = document.getElementById("film-of-the-day");
-                const { backdrop_path, title, overview, release_date } = filmOfTheDay;
-                
-                const backdropPath = backdrop_path ? `${IMGPATH}${backdrop_path}` : ''; // Construct the backdrop image URL
-                
-                const releaseYear = release_date ? new Date(release_date).getFullYear() : 'N/A';
-    
-                
-                const filmOfTheDayHTML = `
+    try {
+        // Fetch the details of the specific movie using its TMDB ID
+        const movieDetailsUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=03cab8d210313d38cea2863da37f0978`;
+        const movieDetailsResponse = await fetch(movieDetailsUrl);
+        const movieDetailsData = await movieDetailsResponse.json();
+
+        // Check if the response contains valid movie details
+        if (movieDetailsData.id) {
+            const filmOfTheDayContainer = document.getElementById("film-of-the-day");
+            const { backdrop_path, title, overview, release_date } = movieDetailsData;
+            const backdropPath = backdrop_path ? `${IMGPATH}${backdrop_path}` : ''; // Construct the backdrop image URL
+            const releaseYear = release_date ? new Date(release_date).getFullYear() : 'N/A';
+
+            const filmOfTheDayHTML = `
                 <div class="movie-banner-container">
                     <div class="overlay">
                         <h1 class="movie-title">${title}</h1>
@@ -48,17 +107,22 @@ function updateFilmOfTheDay() {
                     </div>
                     <img src="${backdropPath}" alt="${title}" class="backdrop-image" />
                 </div>
-            `;  
-    
+            `;
+
             filmOfTheDayContainer.innerHTML = filmOfTheDayHTML;
-    
-                
-            } else {
-                // Handle the case when no eligible movies are found
-                const filmOfTheDayContainer = document.getElementById("film-of-the-day");
-                filmOfTheDayContainer.innerHTML = "No movies found for today.";
-            }
+        } else {
+            // Handle the case when no movie details are found for the specified ID
+            const filmOfTheDayContainer = document.getElementById("film-of-the-day");
+            filmOfTheDayContainer.innerHTML = "No movie found for today.";
         }
+    } catch (error) {
+        console.error("Error fetching movie details:", error);
+        // Handle errors, e.g., show an error message to the user
+        const filmOfTheDayContainer = document.getElementById("film-of-the-day");
+        filmOfTheDayContainer.innerHTML = "Error fetching movie details.";
+    }
+}
+
 
 async function getMovies() {
     console.log("Fetching movies...");
@@ -68,67 +132,126 @@ async function getMovies() {
         "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=03cab8d210313d38cea2863da37f0978&page=1";
     const popularMoviesResponse = await fetch(popularMoviesUrl);
     const popularMoviesData = await popularMoviesResponse.json();
-    popularMovies = popularMoviesData.results.slice(0, 25); // Update the global variable
+    let popularMovies = popularMoviesData.results;
+    popularMovies = await fetchAllPages(popularMoviesUrl, popularMovies);
 
-    // Fetch new releases (you can modify the API endpoint accordingly)
-    const newReleasesUrl =
-        "https://api.themoviedb.org/3/discover/movie?sort_by=release_date.desc&api_key=03cab8d210313d38cea2863da37f0978&page=1";
-    let page = 1;
-    let newReleases = [];
-
-    // Fetch new releases until you have at least 25 movies
-    while (newReleases.length < 25) {
-        const newReleasesResponse = await fetch(`${newReleasesUrl}&page=${page}`);
-        const newReleasesData = await newReleasesResponse.json();
-        const newMovies = newReleasesData.results;
-
-        // If there are no more movies, break the loop
-        if (newMovies.length === 0) {
-            break;
-        }
-
-        // Add new movies to the newReleases array
-        newReleases = [...newReleases, ...newMovies];
-        page++;
-    }
-
-
-    // Slice the array to get the top 25 new releases
-    newReleases = newReleases.slice(0, 25);
-
-    // Fetch top rated movies
+    // Fetch top-rated movies
     const topRatedMoviesUrl =
         "https://api.themoviedb.org/3/movie/top_rated?api_key=03cab8d210313d38cea2863da37f0978&page=1";
     const topRatedMoviesResponse = await fetch(topRatedMoviesUrl);
     const topRatedMoviesData = await topRatedMoviesResponse.json();
-    topRatedMovies = topRatedMoviesData.results.slice(0, 25); // Get the top 25 top-rated movies
+    let topRatedMovies = topRatedMoviesData.results;
+    topRatedMovies = await fetchAllPages(topRatedMoviesUrl, topRatedMovies);
 
     // Fetch upcoming movies
     const upcomingMoviesUrl =
         "https://api.themoviedb.org/3/movie/upcoming?api_key=03cab8d210313d38cea2863da37f0978&page=1";
     const upcomingMoviesResponse = await fetch(upcomingMoviesUrl);
     const upcomingMoviesData = await upcomingMoviesResponse.json();
-    const upcomingMovies = upcomingMoviesData.results.slice(0, 25); // Get the top 25 upcoming movies
+    let upcomingMovies = upcomingMoviesData.results;
+    upcomingMovies = await fetchAllPages(upcomingMoviesUrl, upcomingMovies);
 
     // Create a row for popular movies
-    const popularMoviesRow = createMovieRow("Popular Movies", popularMovies);
-
-    // Create a row for new releases
-    const newReleasesRow = createMovieRow("New Releases", newReleases);
+    const popularMoviesRow = createMovieRow("Popular", popularMovies);
 
     // Create a row for top-rated movies
     const topRatedMoviesRow = createMovieRow("Top Rated", topRatedMovies);
 
     // Create a row for upcoming movies
-    const upcomingMoviesRow = createMovieRow("Upcoming Movies", upcomingMovies);
+    const upcomingMoviesRow = createMovieRow("Upcoming", upcomingMovies);
 
-    updateFilmOfTheDay();
+    // Usage: Call updateFilmOfTheDay function with the specific TMDB movie ID
+    const FILM_OF_THE_DAY_ID = "354912"; // Replace this with the desired TMDB movie ID
+    updateFilmOfTheDay(FILM_OF_THE_DAY_ID);
 
     // Append rows to the main container
     main.appendChild(popularMoviesRow);
     main.appendChild(topRatedMoviesRow);
     main.appendChild(upcomingMoviesRow);
-}
+    // Fetch and display movies for different genres
+    getMoviesByGenre(ACTION_GENRE_ID, ACTION_GENRE_NAME);
+    getMoviesByGenre(ADVENTURE_GENRE_ID, ADVENTURE_GENRE_NAME);
+    getMoviesByGenre(ANIMATION_GENRE_ID, ANIMATION_GENRE_NAME);
+    getMoviesByGenre(COMEDY_GENRE_ID, COMEDY_GENRE_NAME);
+    getMoviesByGenre(SCIENCE_FICTION_GENRE_ID, SCIENCE_FICTION_GENRE_NAME);
+    getMoviesByGenre(ROMANCE_GENRE_ID, ROMANCE_GENRE_NAME);
+    getMoviesByGenre(FAMILY_GENRE_ID, FAMILY_GENRE_NAME);
+    getMoviesByGenre(FANTASY_GENRE_ID, FANTASY_GENRE_NAME);
+    getMoviesByGenre(HORROR_GENRE_ID, HORROR_GENRE_NAME);
+    getMoviesByGenre(THRILLER_GENRE_ID, THRILLER_GENRE_NAME);
+    getMoviesByGenre(MYSTERY_GENRE_ID, MYSTERY_GENRE_NAME);
+    getMoviesByGenre(DRAMA_GENRE_ID, DRAMA_GENRE_NAME);
+    getMoviesByGenre(MUSIC_GENRE_ID, MUSIC_GENRE_NAME);
+    getMoviesByGenre(WAR_GENRE_ID, WAR_GENRE_NAME);
+    getMoviesByGenre(WESTERN_GENRE_ID, WESTERN_GENRE_NAME);
+    getMoviesByGenre(HISTORY_GENRE_ID, HISTORY_GENRE_NAME);
+    }
+
+    // Define a set to keep track of added movie IDs
+    const addedMovieIds = new Set();
+
+    async function getMoviesByGenre(genreId, genreName) {
+        console.log(`Fetching highest rated movies in genre ${genreName}...`);
+
+        let allGenreMovies = [];
+        let currentPage = 1;
+
+        while (allGenreMovies.length < 50) {
+            const genreMoviesUrl = `https://api.themoviedb.org/3/discover/movie?api_key=03cab8d210313d38cea2863da37f0978&with_genres=${genreId}&page=${currentPage}`;
+            const genreMoviesResponse = await fetch(genreMoviesUrl);
+            const genreMoviesData = await genreMoviesResponse.json();
+            const genreMovies = genreMoviesData.results;
+
+            // Filter out movies that are already added to the main container
+            const newGenreMovies = genreMovies.filter(movie => !addedMovieIds.has(movie.id));
+
+            // Append the current page's new movies to the allGenreMovies array
+            allGenreMovies = allGenreMovies.concat(newGenreMovies);
+
+            // Add the new movie IDs to the set
+            newGenreMovies.forEach(movie => addedMovieIds.add(movie.id));
+
+            // If there are more pages, increment the current page, else break the loop
+            if (genreMoviesData.page < genreMoviesData.total_pages) {
+                currentPage++;
+            } else {
+                break;
+            }
+        }
+
+        // Get the top 50 highest rated movies for each genre
+        const topRatedMovies = allGenreMovies.slice(0, 50);
+
+        // Create a row for genre movies with the genre name as the title
+        const genreMoviesRow = createMovieRow(`${genreName}`, topRatedMovies);
+
+        // Append the row to the main container
+        main.appendChild(genreMoviesRow);
+    }
+
+
+    // Function to fetch all pages of movie data
+    async function fetchAllPages(url, movies) {
+        let currentPage = 1;
+
+        while (movies.length < 50) {
+            const nextPageUrl = `${url}&page=${currentPage + 1}`;
+            const nextPageResponse = await fetch(nextPageUrl);
+            const nextPageData = await nextPageResponse.json();
+            const nextPageMovies = nextPageData.results;
+
+            if (nextPageMovies.length === 0) {
+                break; // No more pages, exit the loop
+            }
+
+            movies = movies.concat(nextPageMovies);
+            currentPage++;
+        }
+
+        return movies.slice(0, 50);
+    }
+
+
 
 function createMovieRow(title, movies) {
     const row = document.createElement("div");
@@ -171,6 +294,22 @@ function createMovieRow(title, movies) {
             ratingEl.style.color = "red"; // Set color to red for ratings below or equal to 5
         }
 
+        // Create a star element
+        const starEl = document.createElement("span");
+        starEl.innerText = " ★"; // Unicode character for a star
+        starEl.style.color = "gold"; // Set star color to gold
+        // Apply flexbox to center the text and the star vertically and adjust spacing along the main axis
+        ratingEl.style.display = "flex";
+        ratingEl.style.alignItems = "center";
+        ratingEl.style.justifyContent = "center"; // Center the content horizontally
+
+        // Move the star up a few pixels by adding margin-bottom
+        starEl.style.marginBottom = "2px"; // Adjust the value as needed
+        starEl.style.paddingLeft = "4px"; // Adjust the value as needed
+        
+
+        // Append rating and star elements to the movie element
+        ratingEl.appendChild(starEl);
         movieEl.appendChild(ratingEl);
 
         // Attach event listener to the movie element
@@ -183,10 +322,9 @@ function createMovieRow(title, movies) {
     return row;
 }
 
-
 async function showMovies(movies) {
     // clear main
-    main.innerHTML = "";
+    clearMovies();
 
     for (const movie of movies) {
         const { poster_path, title, vote_average, overview, release_date } = movie;
