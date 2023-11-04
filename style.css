@@ -144,8 +144,8 @@ header {
 .bottom-menu-icon img {
     width: 25px;
     height: 25px;
-    margin-right: 10px; /* Adjust the space between icon and text */
-    margin-left: 10px; /* Adjust the space between icon and text */
+    margin-right: 15px; /* Adjust the space between icon and text */
+    margin-left: 15px; /* Adjust the space between icon and text */
 }
 
 .bottom-menu-icon span {
