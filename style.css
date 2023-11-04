@@ -23,6 +23,8 @@ p {
 h1 {
     font-size: 35px;
     z-index: 1;
+    text-shadow: 2px 2px 2px rgba(63, 63, 63, 0.8);
+
 }
 
 /* Media query for mobile devices with a maximum width of 767px */
@@ -120,6 +122,8 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding:5px;
+
 }
 
 .post-icon-bottom-menu img{
@@ -128,6 +132,11 @@ header {
     margin-bottom: 5px;
     width: 45px;
     height: 45px;
+}
+
+.post-icon-bottom-menu img:hover{
+    background-color: rgb(255, 255, 255, 0.2);
+    border-radius: 10px;
 }
 
 .bottom-menu-icon img {
@@ -141,7 +150,11 @@ header {
     margin-left: 25px; /* Adjust the space between icon and text */
 }
 
-
+.bottom-menu-icon:hover {
+    background-color: rgb(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding:5px;
+}
 
 .sidebar-menu .menu-icon {
     width: 30px; /* Set the width of your icon */
@@ -275,7 +288,7 @@ main {
     padding: 10px 20px; /* Adjust padding as needed */
     z-index: 1; /* Set a high z-index value to ensure it's above other elements */
     width: 100%;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+    text-shadow: 2px 2px 2px rgba(37, 37, 37, 0.8);
 }
 
 
@@ -660,9 +673,9 @@ body::-webkit-scrollbar-thumb:hover {
     pointer-events: none; /* Ensure the fading overlay doesn't interfere with interactions */
     /* Add linear gradients for top and bottom */
     background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)) top,
-                linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)) bottom;
+                linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(255, 255, 255, 0)) bottom;
     z-index: 0;
-    
+
 }
 
 .black-box-bottom {
@@ -696,9 +709,18 @@ body::-webkit-scrollbar-thumb:hover {
     z-index: 9999;
 }
 
-.movie-container-scroll-row {
-    width: 100%; /* Set a fixed width for the container */
-    overflow-x: hidden; /* Hide the horizontal overflow */
-    display: flex;
-    flex-direction: row;
+
+.back-button {
+    display: none;
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    cursor: pointer;
+    z-index: 999; /* Set a high z-index to ensure it appears above other elements */
+}
+
+/* Style the back button icon */
+.back-button img {
+    width: 50px; /* Adjust the width of the back button icon */
+    height: 50px; /* Adjust the height of the back button icon */
 }

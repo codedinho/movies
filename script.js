@@ -13,6 +13,53 @@ let topRatedMovies = []; // Declare popularMovies variable here
 // initially get fav movies
 getMovies();
 
+function updateFilmOfTheDay() {
+            // Find a random movie rated over 8
+            const eligibleMovies = popularMovies.concat(topRatedMovies).filter(movie => movie.vote_average > 7);
+
+            if (eligibleMovies.length > 0) {
+                const randomIndex = Math.floor(Math.random() * eligibleMovies.length);
+                const filmOfTheDay = eligibleMovies[randomIndex];
+        
+                const filmOfTheDayContainer = document.getElementById("film-of-the-day");
+                const { backdrop_path, title, overview, release_date } = filmOfTheDay;
+                
+                const backdropPath = backdrop_path ? `${IMGPATH}${backdrop_path}` : ''; // Construct the backdrop image URL
+                
+                const releaseYear = release_date ? new Date(release_date).getFullYear() : 'N/A';
+    
+                
+                const filmOfTheDayHTML = `
+                <div class="movie-banner-container">
+                    <div class="overlay">
+                        <h1 class="movie-title">${title}</h1>
+                        <p class="movie-release-date"><b>${releaseYear}</b></p>
+                        <div class="button-container">
+                            <button class="watchTrailerButton">
+                                <img src="./assets/icons/youtube.png" alt="YouTube Icon">
+                            </button>
+                            <button class="addToFavouritesButton">
+                                <img src="./assets/icons/add-favourites.png" alt="Add to Favorites Icon">
+                            </button>
+                            <button class="addToPlaylistButton">
+                                <img src="./assets/icons/add-white.png" alt="Add to Playlist Icon">
+                            </button>
+                        </div>
+                    </div>
+                    <img src="${backdropPath}" alt="${title}" class="backdrop-image" />
+                </div>
+            `;  
+    
+            filmOfTheDayContainer.innerHTML = filmOfTheDayHTML;
+    
+                
+            } else {
+                // Handle the case when no eligible movies are found
+                const filmOfTheDayContainer = document.getElementById("film-of-the-day");
+                filmOfTheDayContainer.innerHTML = "No movies found for today.";
+            }
+        }
+
 async function getMovies() {
     console.log("Fetching movies...");
 
@@ -44,52 +91,7 @@ async function getMovies() {
         newReleases = [...newReleases, ...newMovies];
         page++;
     }
-    
 
-        // Find a random movie rated over 8
-        const eligibleMovies = popularMovies.concat(topRatedMovies).filter(movie => movie.vote_average > 7);
-
-        if (eligibleMovies.length > 0) {
-            const randomIndex = Math.floor(Math.random() * eligibleMovies.length);
-            const filmOfTheDay = eligibleMovies[randomIndex];
-    
-            const filmOfTheDayContainer = document.getElementById("film-of-the-day");
-            const { backdrop_path, title, overview, release_date } = filmOfTheDay;
-            
-            const backdropPath = backdrop_path ? `${IMGPATH}${backdrop_path}` : ''; // Construct the backdrop image URL
-            
-            const releaseYear = release_date ? new Date(release_date).getFullYear() : 'N/A';
-
-            
-            const filmOfTheDayHTML = `
-            <div class="movie-banner-container">
-                <div class="overlay">
-                    <h1 class="movie-title">${title}</h1>
-                    <p class="movie-release-date"><b>${releaseYear}</b></p>
-                    <div class="button-container">
-                        <button class="watchTrailerButton">
-                            <img src="./assets/icons/youtube.png" alt="YouTube Icon">
-                        </button>
-                        <button class="addToFavouritesButton">
-                            <img src="./assets/icons/add-favourites.png" alt="Add to Favorites Icon">
-                        </button>
-                        <button class="addToPlaylistButton">
-                            <img src="./assets/icons/add-white.png" alt="Add to Playlist Icon">
-                        </button>
-                    </div>
-                </div>
-                <img src="${backdropPath}" alt="${title}" class="backdrop-image" />
-            </div>
-        `;  
-
-        filmOfTheDayContainer.innerHTML = filmOfTheDayHTML;
-
-            
-        } else {
-            // Handle the case when no eligible movies are found
-            const filmOfTheDayContainer = document.getElementById("film-of-the-day");
-            filmOfTheDayContainer.innerHTML = "No movies found for today.";
-        }
 
     // Slice the array to get the top 25 new releases
     newReleases = newReleases.slice(0, 25);
@@ -119,6 +121,8 @@ async function getMovies() {
 
     // Create a row for upcoming movies
     const upcomingMoviesRow = createMovieRow("Upcoming Movies", upcomingMovies);
+
+    updateFilmOfTheDay();
 
     // Append rows to the main container
     main.appendChild(popularMoviesRow);
@@ -235,6 +239,9 @@ function getClassByRate(vote) {
     }
 }
 
+// Get the back button element
+const backButton = document.getElementById("backButton");
+
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const searchTerm = search.value;
@@ -246,8 +253,50 @@ form.addEventListener("submit", async (e) => {
         showMovies(respData.results);
 
         search.value = "";
+
+        // Switch to the Home tab when the form is submitted
+        switchTab('homeTab', 'homeSection');
+
+        // Show the back button
+        backButton.style.display = "block";
     }
 });
+
+// Function to clear the main element content
+function clearMovies() {
+    main.innerHTML = "";
+}
+
+// Add click event listener for the back button
+backButton.addEventListener("click", () => {
+    // Clear the searched movies
+    clearMovies();
+
+    // Call getMovies function to reset the page
+    getMovies();
+
+    // Switch to the Home tab
+    switchTab('homeTab', 'homeSection');
+
+    // Hide the back button again
+    backButton.style.display = "none";
+});
+
+const homeButton = document.getElementById("homeButton");
+homeTab.addEventListener("click", () => {
+    // Clear the existing movies
+    clearMovies();
+
+    // Get and display the default movies
+    getMovies();
+
+    // Hide the back button
+    backButton.style.display = "none";
+
+    // Switch to the Home tab
+    switchTab('homeTab', 'homeSection');
+});
+
 
 async function fetchMovieDetails(movieTitle) {
     const apiKey = "03cab8d210313d38cea2863da37f0978"; // Replace with your actual API key
